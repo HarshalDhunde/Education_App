@@ -1,9 +1,12 @@
 package com.example.brainwired;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +26,8 @@ public class SignUp extends AppCompatActivity {
     EditText pass;
     EditText confirmPass;
     private FirebaseAuth mAuth;
+    private Dialog progressDialog;
+    private TextView dialogText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,13 @@ public class SignUp extends AppCompatActivity {
         email = findViewById(R.id.email);
         pass = findViewById(R.id.password);
         confirmPass = findViewById(R.id.repassword);
+        progressDialog = new Dialog(SignUp.this);
+        progressDialog.setContentView(R.layout.dialog_layout);
+        progressDialog.setCancelable(false);
+        progressDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        dialogText = progressDialog.findViewById(R.id.dialog_text);
+        dialogText.setText("Registering User...");
 
         MaterialButton regbtn = (MaterialButton) findViewById(R.id.signupbtn);
 
@@ -81,12 +93,15 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void signUpNewUser() {
+        progressDialog.show();
+
         mAuth.createUserWithEmailAndPassword(emailString, passString)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(SignUp.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
                             Intent intent = new Intent(SignUp.this, HomePage.class);
                             startActivity(intent);
                             SignUp.this.finish();
@@ -98,6 +113,7 @@ public class SignUp extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
 //                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            progressDialog.dismiss();
                             Toast.makeText(SignUp.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 //                            updateUI(null);

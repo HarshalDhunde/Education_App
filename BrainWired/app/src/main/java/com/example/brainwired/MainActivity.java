@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 
     private static int SPLASH_SCREEN = 4000;
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Animation topAnim, bottomAnim;
     ImageView image;
     TextView logo;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +39,21 @@ public class MainActivity extends AppCompatActivity {
         image.setAnimation(topAnim);
         logo.setAnimation(bottomAnim);
 
+        mAuth = FirebaseAuth.getInstance();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, SignUp.class);
-                startActivity(intent);
-                finish();
+                if (mAuth.getCurrentUser()!=null){
+                    Intent intent = new Intent(MainActivity.this, HomePage.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else{
+                    Intent intent = new Intent(MainActivity.this, LoginPage.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }, SPLASH_SCREEN);
     }
