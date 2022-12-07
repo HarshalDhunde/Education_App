@@ -1,6 +1,6 @@
 package com.example.brainwired;
 
-public class ClickListiner{
+public class ClickListiner {
 
     // here index is index
 // of item clicked

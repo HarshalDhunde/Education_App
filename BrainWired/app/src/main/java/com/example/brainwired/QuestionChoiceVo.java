@@ -10,12 +10,11 @@ import java.util.ArrayList;
 public class QuestionChoiceVo implements Serializable, Parcelable {
 
     String question;
-    int ans=0;
-    int ans_selected=0;
+    int ans = 0;
+    int ans_selected = 0;
     ArrayList<String> choiceArrayList;
 
-    public QuestionChoiceVo(String question, ArrayList<String> choiceArrayList)
-    {
+    public QuestionChoiceVo(String question, ArrayList<String> choiceArrayList) {
         this.question = question;
         this.choiceArrayList = choiceArrayList;
     }
@@ -55,15 +54,15 @@ public class QuestionChoiceVo implements Serializable, Parcelable {
         this.choiceArrayList = choiceArrayList;
     }
 
-    public void setAns_selected(int n){
+    public void setAns_selected(int n) {
         this.ans_selected = n;
     }
 
     public String getAns_selected() {
-        if(ans_selected==0){
+        if (ans_selected == 0) {
             return "Nothing Selected";
-        }else
-        return choiceArrayList.get(ans_selected-1);
+        } else
+            return choiceArrayList.get(ans_selected - 1);
     }
 
     public void setAns(int ans) {
@@ -71,10 +70,10 @@ public class QuestionChoiceVo implements Serializable, Parcelable {
     }
 
     public String getAns() {
-        if(ans==0){
+        if (ans == 0) {
             return "Answer not given";
-        }else
-            return choiceArrayList.get(ans-1);
+        } else
+            return choiceArrayList.get(ans - 1);
     }
 
     @Override
