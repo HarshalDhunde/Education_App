@@ -31,7 +31,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     ImageView exampic, exampic2;
     TextView tv1, tv2;
     Button signout;
-    ArrayList<ArrayList<QuestionChoiceVo>> quiz = new ArrayList<ArrayList<QuestionChoiceVo>>();
+    ArrayList<QuestionChoiceVo> quiz = new ArrayList<QuestionChoiceVo>();
+    ArrayList<QuestionChoiceVo> quiz1 = new ArrayList<QuestionChoiceVo>();
+    ArrayList<QuestionChoiceVo> quiz2 = new ArrayList<QuestionChoiceVo>();
     ArrayList<yt_data> yt = new ArrayList<yt_data>();
 
     @Override
@@ -66,7 +68,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 if (index % 2 == 0) {
                     openYT(index / 2);
                 } else {
-                    int i = (index + 1) / 2;
+                    int i = (index - 1) / 2;
                     openQuiz(i);
                 }
             }
@@ -102,6 +104,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         list.add(new examData("Second Video", "April 27, 2017", "This is testing exam .."));
         list.add(new examData("Second Quiz", "April 27, 2017", "This is testing exam .."));
         list.add(new examData("Third Video", "April 27, 2017", "This is testing exam .."));
+        list.add(new examData("Third Quiz", "April 27, 2017", "This is testing exam .."));
 
         return list;
     }
@@ -128,11 +131,17 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     private void openQuiz(int index) {
         Calendar date = Calendar.getInstance();
         long timeInSecs = date.getTimeInMillis() + 1 * 60 * 1000;
-        ArrayList<QuestionChoiceVo> Quess = quiz.get(index);
 
         Intent intent = new Intent(HomePage.this, TopicsPage.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("Questions", Quess);
+//        bundle.putSerializable("Questions", Quess);
+        if (index == 0) {
+            bundle.putSerializable("Questions", quiz);
+        } else if (index == 1){
+            bundle.putSerializable("Questions", quiz1);
+        } else if (index == 2) {
+            bundle.putSerializable("Questions", quiz2);
+        }
 
         bundle.putLong("time", timeInSecs);
         intent.putExtra("Quiz_details", bundle);
@@ -164,12 +173,30 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         String ques, o1, o2, o3, o4;
         int co;
         try {
-            while ((str = br1.readLine()) != null) {
-                if (str.equals("ssss")){
-                    quiz.add(questionChoiceVoArrayList);
-                    questionChoiceVoArrayList.clear();
-                    continue;
-                }
+//            while ((str = br1.readLine()) != null || str == "ssss") {
+//                if (str.equals("ssss")){
+//                    quiz.add(questionChoiceVoArrayList);
+//                    questionChoiceVoArrayList.clear();
+//                    continue;
+//                }
+//                String[] s = str.split("::");
+//                ques = s[0];
+//                o1 = s[1];
+//                o2 = s[2];
+//                o3 = s[3];
+//                o4 = s[4];
+//                co = Integer.parseInt(s[5]);
+//                ArrayList<String> list1 = new ArrayList<String>();
+//                list1.add(o1);
+//                list1.add(o2);
+//                list1.add(o3);
+//                list1.add(o4);
+//                questionChoiceVoArrayList.add(new QuestionChoiceVo(ques, list1, co));
+//
+//            }
+
+            for(int i = 0;i<15;i++ ){
+                str = br1.readLine();
                 String[] s = str.split("::");
                 ques = s[0];
                 o1 = s[1];
@@ -182,7 +209,13 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 list1.add(o2);
                 list1.add(o3);
                 list1.add(o4);
-                questionChoiceVoArrayList.add(new QuestionChoiceVo(ques, list1, co));
+                if(i<5){
+                    quiz.add(new QuestionChoiceVo(ques, list1, co));
+                }else if(i<10){
+                    quiz1.add(new QuestionChoiceVo(ques, list1, co));
+                } else {
+                    quiz2.add(new QuestionChoiceVo(ques, list1, co));
+                }
 
             }
         } catch (IOException e) {
