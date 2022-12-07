@@ -10,6 +10,7 @@
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
+        android:layout_margin="24dp"
         android:layout_height="wrap_content"
         android:text="Remaining time : "
         android:textSize="20dp"/>
@@ -20,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@id/title"
+        android:layout_margin="24dp"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/title"
         android:text="00.00.00"
@@ -34,7 +36,7 @@
         <LinearLayout
             android:id="@+id/questionsLinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginHorizontal="20dp">
 

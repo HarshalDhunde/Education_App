@@ -2,7 +2,6 @@ package com.example.brainwired;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,11 +12,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ResultPage extends AppCompatActivity {
 
     LinearLayout linearLayout;
+    TextView marks;
     Intent intent;
+    ArrayList<QuestionChoiceVo> players = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,10 +27,33 @@ public class ResultPage extends AppCompatActivity {
         setContentView(R.layout.result_activity);
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("BUNDLE");
-        ArrayList<QuestionChoiceVo> players = null;
+
         players = (ArrayList<QuestionChoiceVo>) args.getSerializable("ARRAYLIST");
         linearLayout = (LinearLayout) findViewById(R.id.linear1);
         prepareQuestionAnswerLayout(players);
+
+        marks = findViewById(R.id.marksTV);
+        marks.setText("Marks Scored: " + calcMarks());
+
+        Button btn = (Button) findViewById(R.id.homebtn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iintent = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(iintent);
+            }
+        });
+    }
+
+    public String calcMarks() {
+        int scoredmarks = 0, totmarks;
+        totmarks = players.size();
+        for (QuestionChoiceVo mQuestionChoiceVo : players) {
+            if (Objects.equals(mQuestionChoiceVo.getAns(), mQuestionChoiceVo.getAns_selected())) {
+                scoredmarks++;
+            }
+        }
+        return (Integer.toString(scoredmarks) + "/" + Integer.toString(totmarks));
     }
 
     private void prepareQuestionAnswerLayout(ArrayList<QuestionChoiceVo> questionChoiceVoArrayList) {
@@ -56,21 +81,10 @@ public class ResultPage extends AppCompatActivity {
             ans.setText("Correct Answer : " + mQuestionChoiceVo.getAns());
             ans.setTextSize(15f);
             mSingleQuestionLinearLayout.addView(ans);
+            mSingleQuestionLinearLayout.setPadding(12, 18, 12, 18);
             linearLayout.addView(mSingleQuestionLinearLayout);
         }
-        Button btn = new Button(this);
-        btn.setText("home");
-        btn.setEnabled(true);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (QuestionChoiceVo q : questionChoiceVoArrayList) {
-                    Log.d("Ans::::::", "onClick: " + q.getAns_selected());
-                }
-                Intent iintent = new Intent(getApplicationContext(), HomePage.class);
-                startActivity(iintent);
-            }
-        });
-        linearLayout.addView(btn);
+
+
     }
 }
