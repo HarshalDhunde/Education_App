@@ -66,7 +66,7 @@ public class ResultPage extends AppCompatActivity {
                 for(QuestionChoiceVo q: questionChoiceVoArrayList){
                     Log.d("Ans::::::", "onClick: "+q.getAns_selected());
                 }
-                Intent iintent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent iintent = new Intent(getApplicationContext(),HomePage.class);
                 startActivity(iintent);
             }
         });

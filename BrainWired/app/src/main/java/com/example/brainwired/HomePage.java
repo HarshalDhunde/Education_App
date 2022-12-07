@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HomePage extends AppCompatActivity implements NavigationView
@@ -45,18 +46,16 @@ public class HomePage extends AppCompatActivity implements NavigationView
         List<examData> list = new ArrayList<>();
         list = getData();
 
-        recyclerView
-                = (RecyclerView) findViewById(
-                R.id.recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         listiner = new ClickListiner() {
             @Override
             public void click(int index) {
                 Toast.makeText(getApplicationContext(), "clicked item index is " + index, Toast.LENGTH_LONG).show();
                 if (index % 2 == 0){
-//                    openYT();
+                    openYT();
                 }
                 else{
-//                    openQuiz();
+                    openQuiz();
                 }
             }
         };
@@ -108,9 +107,42 @@ public class HomePage extends AppCompatActivity implements NavigationView
     }
 
     private void openYT(){
+        String dec = "Idol Season 13 is here to entertain you with its musical vocals and mesmerizing performances. This season is filled with talented people who are here to try their luck and show the world with their singing that they are here to spellbound all."
+                 +"Show Name – Indian Idol 13 Judges – Neha Kakkar, Himesh Reshammiya, Vishal Dadlani" +
+                "Host – Aditya Narayan Episode No - 23";
         Intent intent = new Intent(HomePage.this, Youtubepage.class);
-//        intent.putExtra();
+        Bundle bundle = new Bundle();
+        bundle.putString("vidid","Y40J_DomBu4");
+        bundle.putString("desc",dec);
+        intent.putExtra("yt_details",bundle);
         startActivity(intent);
     }
 
+    private void openQuiz(){
+        Calendar date = Calendar.getInstance();
+        long timeInSecs = date.getTimeInMillis() + 1*60*1000;
+
+        ArrayList<QuestionChoiceVo> questionChoiceVoArrayList = loadQuizData();
+
+        Intent intent = new Intent(HomePage.this, TopicsPage.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Questions",questionChoiceVoArrayList);
+        bundle.putLong("time",timeInSecs);
+        intent.putExtra("Quiz_details",bundle);
+        startActivity(intent);
+
+    }
+
+    private  ArrayList<QuestionChoiceVo> loadQuizData() {
+    ArrayList<QuestionChoiceVo> questionChoiceVoArrayList = new ArrayList<>();
+
+        QuestionChoiceVo mQuestionChoiceVoOne = new QuestionChoiceVo("Question One", new ArrayList<String>() {{add("Choice One");add("Choice Two");add("Choice Three");}});
+        QuestionChoiceVo mQuestionChoiceVoTwo = new QuestionChoiceVo("Question Two", new ArrayList<String>() {{add("Choice One");add("Choice Two");add("Choice Three");}});
+        QuestionChoiceVo mQuestionChoiceVoThree = new QuestionChoiceVo("Question Three", new ArrayList<String>() {{add("Choice One");add("Choice Two");add("Choice Three");}});
+
+        questionChoiceVoArrayList.add(mQuestionChoiceVoOne);
+        questionChoiceVoArrayList.add(mQuestionChoiceVoTwo);
+        questionChoiceVoArrayList.add(mQuestionChoiceVoThree);
+        return questionChoiceVoArrayList;
+    }
 }

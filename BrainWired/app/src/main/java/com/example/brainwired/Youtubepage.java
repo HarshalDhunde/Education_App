@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,26 +20,31 @@ public class Youtubepage extends AppCompatActivity {
 
     YouTubePlayerView youTubePlayerView;
     Button homebtn;
+    TextView desc;
+
     private FullScreenHelper fullScreenHelper = new FullScreenHelper(this);
-//    LifecycleOwner lifecycleOwner;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.youtube_activity);
 
-        homebtn = findViewById(R.id.home);
-        youTubePlayerView = findViewById(R.id.youtube_player_view);
+        Intent intent  = getIntent();
+        Bundle bundle = intent.getBundleExtra("yt_details");
+        String videoId = bundle.getString("vidid");
+        String description = bundle.getString("desc");
 
+        homebtn = (Button) findViewById(R.id.returnn);
+        youTubePlayerView = findViewById(R.id.youtube_player_view);
+        desc = findViewById(R.id.tag_state_description);
+        desc.setText(description);
         getLifecycle().addObserver(youTubePlayerView);
 
-//        lifecycleOwner.getLifecycle().addObserver(youTubePlayerView);
+
 
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                String videoId = "Y40J_DomBu4";
                 youTubePlayer.loadVideo(videoId, 0);
-
             }
         });
 
@@ -46,7 +52,7 @@ public class Youtubepage extends AppCompatActivity {
         homebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent iintent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent iintent = new Intent(getApplicationContext(),HomePage.class);
                 startActivity(iintent);
             }
         });
@@ -76,28 +82,19 @@ public class Youtubepage extends AppCompatActivity {
 
 
 
-    /**
-     * Class responsible for changing the view from full screen to non-full screen and vice versa.
-     *
-     * @author Pierfrancesco Soffritti
-     */
+
     public class FullScreenHelper {
 
         private Activity context;
         private View[] views;
 
-        /**
-         * @param context
-         * @param views to hide/show
-         */
+
         public FullScreenHelper(Activity context, View ... views) {
             this.context = context;
             this.views = views;
         }
 
-        /**
-         * call this method to enter full screen
-         */
+
         public void enterFullScreen() {
             View decorView = context.getWindow().getDecorView();
 
@@ -109,9 +106,7 @@ public class Youtubepage extends AppCompatActivity {
             }
         }
 
-        /**
-         * call this method to exit full screen
-         */
+
         public void exitFullScreen() {
             View decorView = context.getWindow().getDecorView();
 
