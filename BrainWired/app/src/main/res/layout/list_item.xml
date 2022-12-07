@@ -1,51 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <!--For image src we have used ic_launcher
+        and for text "courseName" they are used
+        only for reference how it will looks"-->
+    <ImageView
+        android:id="@+id/courseImg"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:padding="8dp"
+        android:src="@mipmap/ic_launcher_round" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-
-        <!--        <ImageView-->
-        <!--            android:id="@+id/item_image"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="194dp"-->
-        <!--            android:importantForAccessibility="no"-->
-        <!--            android:scaleType="centerCrop" />-->
-
+        android:orientation="vertical"
+        android:layout_gravity="center">
         <TextView
-            android:id="@+id/item_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:padding="16dp"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/VideoTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:padding="16dp"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textSize="16sp"
-            app:drawableLeftCompat="@drawable/ic_play" />
-
-        <TextView
-            android:id="@+id/QuizTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:padding="16dp"
-
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textSize="16sp"
-            app:drawableLeftCompat="@drawable/ic_baseline_quiz_24" />
-
+            android:id="@+id/courseName"
+            android:text="courseName"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>
