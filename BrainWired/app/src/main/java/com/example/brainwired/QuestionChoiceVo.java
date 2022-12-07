@@ -14,9 +14,10 @@ public class QuestionChoiceVo implements Serializable, Parcelable {
     int ans_selected = 0;
     ArrayList<String> choiceArrayList;
 
-    public QuestionChoiceVo(String question, ArrayList<String> choiceArrayList) {
+    public QuestionChoiceVo(String question, ArrayList<String> choiceArrayList, int ans) {
         this.question = question;
         this.choiceArrayList = choiceArrayList;
+        this.ans = ans;
     }
 
     protected QuestionChoiceVo(Parcel in) {

@@ -17,6 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -26,12 +31,19 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     ImageView exampic, exampic2;
     TextView tv1, tv2;
     Button signout;
-
+    ArrayList<ArrayList<QuestionChoiceVo>> quiz = new ArrayList<ArrayList<QuestionChoiceVo>>();
+    ArrayList<yt_data> yt = new ArrayList<yt_data>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        try {
+            loadData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         signout = findViewById(R.id.SignOutB);
         signout.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +53,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             }
         });
 
-        exampic = findViewById(R.id.examPic);
+        //exampic = findViewById(R.id.examPic);
 
         List<examData> list = new ArrayList<>();
         list = getData();
@@ -52,11 +64,10 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             public void click(int index) {
                 Toast.makeText(getApplicationContext(), "clicked item index is " + index, Toast.LENGTH_LONG).show();
                 if (index % 2 == 0) {
-                    openYT();
-
-
+                    openYT(index / 2);
                 } else {
-                    openQuiz();
+                    int i = (index + 1) / 2;
+                    openQuiz(i);
                 }
             }
         };
@@ -101,53 +112,119 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         return false;
     }
 
-    private void openYT() {
-        String dec = "Idol Season 13 is here to entertain you with its musical vocals and mesmerizing performances. This season is filled with talented people who are here to try their luck and show the world with their singing that they are here to spellbound all." + "Show Name – Indian Idol 13 Judges – Neha Kakkar, Himesh Reshammiya, Vishal Dadlani" + "Host – Aditya Narayan Episode No - 23";
+    private void openYT(int index) {
+
+        yt_data ytData = yt.get(index);
+        String dec = ytData.getDesc();
+        String id = ytData.getId();
         Intent intent = new Intent(HomePage.this, Youtubepage.class);
         Bundle bundle = new Bundle();
-        bundle.putString("vidid", "Y40J_DomBu4");
+        bundle.putString("vidid", id);
         bundle.putString("desc", dec);
         intent.putExtra("yt_details", bundle);
         startActivity(intent);
     }
 
-    private void openQuiz() {
+    private void openQuiz(int index) {
         Calendar date = Calendar.getInstance();
         long timeInSecs = date.getTimeInMillis() + 1 * 60 * 1000;
-
-        ArrayList<QuestionChoiceVo> questionChoiceVoArrayList = loadQuizData();
+        ArrayList<QuestionChoiceVo> Quess = quiz.get(index);
 
         Intent intent = new Intent(HomePage.this, TopicsPage.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("Questions", questionChoiceVoArrayList);
+        bundle.putSerializable("Questions", Quess);
+
         bundle.putLong("time", timeInSecs);
         intent.putExtra("Quiz_details", bundle);
         startActivity(intent);
 
     }
 
-    private ArrayList<QuestionChoiceVo> loadQuizData() {
+    private void loadData() throws IOException {
         ArrayList<QuestionChoiceVo> questionChoiceVoArrayList = new ArrayList<>();
+        InputStream inputStream = getAssets().open("video.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
 
-        QuestionChoiceVo mQuestionChoiceVoOne = new QuestionChoiceVo("Question One", new ArrayList<String>() {{
-            add("Choice One");
-            add("Choice Two");
-            add("Choice Three");
-        }});
-        QuestionChoiceVo mQuestionChoiceVoTwo = new QuestionChoiceVo("Question Two", new ArrayList<String>() {{
-            add("Choice One");
-            add("Choice Two");
-            add("Choice Three");
-        }});
-        QuestionChoiceVo mQuestionChoiceVoThree = new QuestionChoiceVo("Question Three", new ArrayList<String>() {{
-            add("Choice One");
-            add("Choice Two");
-            add("Choice Three");
-        }});
+        String str;
+        String id, desc;
+        try {
+            while ((str = br.readLine()) != null) {
+                String[] s = str.split("::");
+                id = s[0];
+                desc = s[1];
+                yt.add(new yt_data(id, desc));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        questionChoiceVoArrayList.add(mQuestionChoiceVoOne);
-        questionChoiceVoArrayList.add(mQuestionChoiceVoTwo);
-        questionChoiceVoArrayList.add(mQuestionChoiceVoThree);
-        return questionChoiceVoArrayList;
+        InputStream inputStream1 = getAssets().open("mcq.txt");
+        BufferedReader br1 = new BufferedReader(new InputStreamReader(inputStream1, StandardCharsets.UTF_8));
+
+        String ques, o1, o2, o3, o4;
+        int co;
+        try {
+            while ((str = br1.readLine()) != null) {
+                if (str.equals("ssss")){
+                    quiz.add(questionChoiceVoArrayList);
+                    questionChoiceVoArrayList.clear();
+                    continue;
+                }
+                String[] s = str.split("::");
+                ques = s[0];
+                o1 = s[1];
+                o2 = s[2];
+                o3 = s[3];
+                o4 = s[4];
+                co = Integer.parseInt(s[5]);
+                ArrayList<String> list1 = new ArrayList<String>();
+                list1.add(o1);
+                list1.add(o2);
+                list1.add(o3);
+                list1.add(o4);
+                questionChoiceVoArrayList.add(new QuestionChoiceVo(ques, list1, co));
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        QuestionChoiceVo mQuestionChoiceVoOne = new QuestionChoiceVo("Question One", new ArrayList<String>() {{
+//            add("Choice One");
+//            add("Choice Two");
+//            add("Choice Three");
+//        }});
+//        QuestionChoiceVo mQuestionChoiceVoTwo = new QuestionChoiceVo("Question Two", new ArrayList<String>() {{
+//            add("Choice One");
+//            add("Choice Two");
+//            add("Choice Three");
+//        }});
+//        QuestionChoiceVo mQuestionChoiceVoThree = new QuestionChoiceVo("Question Three", new ArrayList<String>() {{
+//            add("Choice One");
+//            add("Choice Two");
+//            add("Choice Three");
+//        }});
+//
+//        questionChoiceVoArrayList.add(mQuestionChoiceVoOne);
+//        questionChoiceVoArrayList.add(mQuestionChoiceVoTwo);
+//        questionChoiceVoArrayList.add(mQuestionChoiceVoThree);
+//        return questionChoiceVoArrayList;
+    }
+
+    private class yt_data {
+        String id, desc;
+
+        yt_data(String id, String dec) {
+            this.id = id;
+            desc = dec;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public String getId() {
+            return id;
+        }
     }
 }
