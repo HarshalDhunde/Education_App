@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_margin="24dp"
     android:layout_height="105dp">
 
 
@@ -11,7 +12,7 @@
         android:id="@+id/examName"
         android:textSize="16sp"
         android:layout_marginStart="20dp"
-        android:text="First Exam"
+        android:text="First Video"
         android:textColor="@color/black"
         android:layout_marginEnd="20dp"
         android:maxLines="1"
@@ -23,10 +24,9 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_below="@+id/examName"
-        app:tint="#808080"
         android:layout_marginStart="20dp"
         android:layout_marginTop="7dp"
-        app:srcCompat="@drawable/ic_baseline_schedule_24"/>
+        app:srcCompat="@drawable/ic_baseline_smart_display_24"/>
 
     <TextView
         android:id="@+id/examDate"
@@ -46,10 +46,9 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_below="@+id/examDate"
-        app:tint="#808080"
         android:layout_marginStart="20dp"
         android:layout_marginTop="7dp"
-        app:srcCompat="@drawable/ic_baseline_school_24"/>
+        app:srcCompat="@drawable/ic_baseline_quiz_24"/>
 
     <TextView
         android:id="@+id/examMessage"
@@ -71,6 +70,7 @@
         android:layout_height="1dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
+
         android:layout_alignParentBottom="true"
         android:background="#808080"/>
 

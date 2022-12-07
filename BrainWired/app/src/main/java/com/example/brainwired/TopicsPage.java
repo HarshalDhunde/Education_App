@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TopicsPage extends AppCompatActivity {
 
-    Button btn ;
+    Button btn;
     LinearLayout linearLayout;
     ArrayList selected = new ArrayList();
     ArrayList<QuestionChoiceVo> questionChoiceVoArrayList;
@@ -42,16 +42,16 @@ public class TopicsPage extends AppCompatActivity {
         timer = findViewById(R.id.timerr);
         btn = findViewById(R.id.button5);
 
-        Intent intent  = getIntent();
+        Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("Quiz_details");
         questionChoiceVoArrayList = (ArrayList<QuestionChoiceVo>) bundle.getSerializable("Questions");
 
         long timee = bundle.getLong("time");
         Calendar date = Calendar.getInstance();
         long timeInSecs = date.getTimeInMillis();
-        new CountDownTimer(timee-timeInSecs, 1000) {
+        new CountDownTimer(timee - timeInSecs, 1000) {
             public void onTick(long millisUntilFinished) {
-                timer.setText(""+String.format(FORMAT,
+                timer.setText("" + String.format(FORMAT,
                         TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
                         TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
                                 TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
@@ -59,10 +59,10 @@ public class TopicsPage extends AppCompatActivity {
                                 TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
             }
 
-            public void onFinish() {onClick(new View(getApplicationContext()));
+            public void onFinish() {
+                onClick(new View(getApplicationContext()));
             }
         }.start();
-
 
 
         btn.setOnClickListener(this::onClick);
@@ -72,13 +72,12 @@ public class TopicsPage extends AppCompatActivity {
     }
 
 
-
     private void prepareQuestionAnswerLayout(ArrayList<QuestionChoiceVo> questionChoiceVoArrayList) {
         for (QuestionChoiceVo mQuestionChoiceVo : questionChoiceVoArrayList) {
             LinearLayout mSingleQuestionLinearLayout = new LinearLayout(this);
             mSingleQuestionLinearLayout.setOrientation(LinearLayout.VERTICAL);
             mSingleQuestionLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            mSingleQuestionLinearLayout.setPadding(0,5,0,5);
+            mSingleQuestionLinearLayout.setPadding(0, 5, 0, 5);
             TextView mTextView = new TextView(this);
             mTextView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             mTextView.setText(mQuestionChoiceVo.getQuestion());
@@ -103,7 +102,7 @@ public class TopicsPage extends AppCompatActivity {
         RadioGroup radioGroup = new RadioGroup(this);
         radioGroup.setId(View.generateViewId());
 
-        for (int i = 0; i < mQuestionChoiceVo.getChoiceArrayList().size(); i++){
+        for (int i = 0; i < mQuestionChoiceVo.getChoiceArrayList().size(); i++) {
             RadioButton radioButton = new RadioButton(this);
             radioButton.setText(mQuestionChoiceVo.getChoiceArrayList().get(i));
             radioButton.setTextSize(18f);
@@ -111,20 +110,20 @@ public class TopicsPage extends AppCompatActivity {
             radioGroupLayoutParams.setMargins(10, 10, 10, 10);
             radioButton.setPadding(10, 10, 10, 10);
             radioButton.setLayoutParams(radioGroupLayoutParams);
-            radioButton.setId(i+1);
+            radioButton.setId(i + 1);
             radioGroup.addView(radioButton);
         }
         return radioGroup;
     }
 
     public void onClick(View v) {
-        for(QuestionChoiceVo q: questionChoiceVoArrayList){
-            Log.d("Ans::::::", "onClick: "+q.getAns_selected());
+        for (QuestionChoiceVo q : questionChoiceVoArrayList) {
+            Log.d("Ans::::::", "onClick: " + q.getAns_selected());
         }
-        Intent intent = new Intent(getApplicationContext(),ResultPage.class);
+        Intent intent = new Intent(getApplicationContext(), ResultPage.class);
         Bundle args = new Bundle();
-        args.putSerializable("ARRAYLIST",(Serializable)questionChoiceVoArrayList);
-        intent.putExtra("BUNDLE",args);
+        args.putSerializable("ARRAYLIST", (Serializable) questionChoiceVoArrayList);
+        intent.putExtra("BUNDLE", args);
         startActivity(intent);
     }
 
@@ -138,7 +137,7 @@ public class TopicsPage extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int key_code, KeyEvent key_event) {
-        if (key_code== KeyEvent.KEYCODE_BACK) {
+        if (key_code == KeyEvent.KEYCODE_BACK) {
             super.onKeyDown(key_code, key_event);
             return true;
         }

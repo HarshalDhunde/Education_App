@@ -44,12 +44,11 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mAuth.getCurrentUser()!=null){
+                if (mAuth.getCurrentUser() != null) {
                     Intent intent = new Intent(MainActivity.this, HomePage.class);
                     startActivity(intent);
                     finish();
-                }
-                else{
+                } else {
                     Intent intent = new Intent(MainActivity.this, LoginPage.class);
                     startActivity(intent);
                     finish();

@@ -23,12 +23,13 @@ public class Youtubepage extends AppCompatActivity {
     TextView desc;
 
     private FullScreenHelper fullScreenHelper = new FullScreenHelper(this);
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.youtube_activity);
 
-        Intent intent  = getIntent();
+        Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("yt_details");
         String videoId = bundle.getString("vidid");
         String description = bundle.getString("desc");
@@ -38,7 +39,6 @@ public class Youtubepage extends AppCompatActivity {
         desc = findViewById(R.id.tag_state_description);
         desc.setText(description);
         getLifecycle().addObserver(youTubePlayerView);
-
 
 
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
@@ -52,7 +52,7 @@ public class Youtubepage extends AppCompatActivity {
         homebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent iintent = new Intent(getApplicationContext(),HomePage.class);
+                Intent iintent = new Intent(getApplicationContext(), HomePage.class);
                 startActivity(iintent);
             }
         });
@@ -67,8 +67,7 @@ public class Youtubepage extends AppCompatActivity {
         // Checks the orientation of the screen
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             youTubePlayerView.enterFullScreen();
-        }
-        else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             youTubePlayerView.exitFullScreen();
         }
     }
@@ -80,16 +79,13 @@ public class Youtubepage extends AppCompatActivity {
     }
 
 
-
-
-
     public class FullScreenHelper {
 
         private Activity context;
         private View[] views;
 
 
-        public FullScreenHelper(Activity context, View ... views) {
+        public FullScreenHelper(Activity context, View... views) {
             this.context = context;
             this.views = views;
         }
@@ -100,7 +96,7 @@ public class Youtubepage extends AppCompatActivity {
 
             hideSystemUi(decorView);
 
-            for(View view : views) {
+            for (View view : views) {
                 view.setVisibility(View.GONE);
                 view.invalidate();
             }
@@ -112,7 +108,7 @@ public class Youtubepage extends AppCompatActivity {
 
             showSystemUi(decorView);
 
-            for(View view : views) {
+            for (View view : views) {
                 view.setVisibility(View.VISIBLE);
                 view.invalidate();
             }
