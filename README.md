@@ -11,7 +11,7 @@ Java
 Android Studio
 
 ## UI of the App - 
-＜img src="[Paste Your Link Here](https://github.com/HarshalDhunde/Education_App/assets/101267394/2498716c-a733-4177-a28a-a6768f45e100)" width="500" height="300"＞
+＜img src="https://github.com/HarshalDhunde/Education_App/assets/101267394/2498716c-a733-4177-a28a-a6768f45e100" width="500" height="300"＞
 ![1](https://github.com/HarshalDhunde/Education_App/assets/101267394/2498716c-a733-4177-a28a-a6768f45e100)
 ![2](https://github.com/HarshalDhunde/Education_App/assets/101267394/dadc2e78-fde5-42cc-b708-aad07b3a04d9)
 ![3](https://github.com/HarshalDhunde/Education_App/assets/101267394/e4f7e5f6-591f-454f-9943-21967273f3f5)
