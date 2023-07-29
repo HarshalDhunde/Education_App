@@ -1,14 +1,22 @@
 # Education App
 
-The educational app, developed using Java, has basic functionality such as login, registration, and a home page displaying videos and quizzes.
-Videos are fetched from YouTube and displayed using a RecyclerView. The quiz section has a timer and auto-submits if not completed within the specified duration, showing the result page with correct answers.The educational app, developed using Java, has basic functionality such as login, registration, and a home page displaying videos and quizzes.
-Videos are fetched from YouTube and displayed using a RecyclerView. The quiz section has a timer and auto-submits if not completed within the specified duration, showing the result page with correct answers.
+<ul>
+  <li>The educational app is developed using Java and offers a user-friendly interface for easy navigation.</li>
+  <li>It includes a secure login and registration system to ensure user privacy and data protection.</li>
+  <li>The home page of the app prominently features two main sections: videos and quizzes.</li>
+  <li>In the videos section, educational content is fetched from YouTube and displayed using a RecyclerView. Users can scroll through the list of videos and select the ones they want to watch.</li>
+  <li>The quizzes section provides an interactive learning experience. Each quiz has a set of questions with multiple-choice options.</li>
+  <li>A timer is integrated into the quizzes, allowing users to see the remaining time to complete the quiz.</li>
+  <li>If the user fails to complete the quiz within the specified duration, the app automatically submits the quiz and proceeds to the result page.</li>
+  <li>After completing the quiz, the app displays the result page, showing the user's score and the correct answers to each question.</li>
+  <li>Users can review their performance and learn from their mistakes.</li>
+</ul>
 
 ## Language Used - 
-Java
+<ul><li>Java</li></ul>
 
 ## Tool Used - 
-Android Studio
+<ul><li>Android Studio</li></ul>
 
 ## UI of the App - 
 <p align="center"><kbd><img src="https://github.com/HarshalDhunde/Education_App/assets/101267394/2498716c-a733-4177-a28a-a6768f45e100.png" width="200" height="400" /></kbd>
