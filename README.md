@@ -1,4 +1,4 @@
-# Education App
+# Educational App
 
 <ul>
   <li>The educational app is developed using Java and offers a user-friendly interface for easy navigation.</li>
